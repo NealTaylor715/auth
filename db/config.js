@@ -1,4 +1,6 @@
 var mongoose = require('mongoose');
+var Promise = require('bluebird');
+Promise.promisifyAll(mongoose);
 var MongoClient = require('mongodb').MongoClient;
 var findOrCreate = require('mongoose-findorcreate');
 var MONGODB_URI = process.env.MONGODB_URI;
