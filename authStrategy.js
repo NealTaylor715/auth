@@ -23,7 +23,7 @@ module.exports = {
           console.log('created from Mongo is', created);
           done(null,user,created);
         }
-      })
+      });
     }
   )
 }  
