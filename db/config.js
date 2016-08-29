@@ -12,8 +12,8 @@ mongoose.connect(MONGODB_URI,
     console.log(err);
     process.exit(1);
   } else {
-  db = database;
-  console.log("Database connection ready");
+    db = database;
+    console.log("Database connection ready");
   }
 });
 
