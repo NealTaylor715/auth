@@ -65,9 +65,9 @@ app.get('/connect/google', passport.authenticate( 'google', { scope: [
 }))
 
 
-app.get('/api/v1/auth/callback/google', passport.authenticate('google', { failureRedirect: '/#/sign-in' }),
+app.get('/api/v1/auth/callback/google', passport.authenticate('google', { failureRedirect: '/login' }),
   function(req, res) {
-    res.redirect('/#/dashboard');
+    res.redirect('/');
 });
 
 app.get('/logout', handler.logOut);
