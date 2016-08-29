@@ -24,7 +24,7 @@ app.use( bodyParser.urlencoded({
 app.use( cookieParser('cookie_secret'));
 app.use( session({
   secret: 'cookie_secret',
-  name:   'newreactions',
+  name:   'backScratch',
   resave: false,
   saveUninitialized: false,
   store:  new RedisStore({
@@ -59,15 +59,13 @@ app.get('/verify', ensureAuthenticated, (req, res) => {
 });
 
 app.get('/connect/google', passport.authenticate( 'google', { scope: [
-  'https://www.googleapis.com/auth/plus.login',
-  'https://www.googleapis.com/auth/gmail.readonly',
   'https://www.googleapis.com/auth/plus.profile.emails.read'],
-   accessType: 'offline',
+   accessType: 'online',
    prompt: 'consent'
-}));
+}))
 
 
-app.get('/connect/callback/google', passport.authenticate('google', { failureRedirect: '/#/sign-in' }),
+app.get('/api/v1/auth/callback/google', passport.authenticate('google', { failureRedirect: '/#/sign-in' }),
   function(req, res) {
     res.redirect('/#/dashboard');
 });

@@ -8,11 +8,12 @@ module.exports = {
   google: new GoogleStrategy({
     clientID:     clientID,
     clientSecret: clientSecret,
-    callbackURL: process.env.WEBSERVER_URL + '/api/v1/auth/connect/callback/google',
+    callbackURL:  process.env.WEBSERVER_URL + '/api/v1/auth/callback/google',
     passReqToCallback: true
     },
     (request, accessToken, refreshToken, profile, done) => {
       var userId = profile.emails[0].value;
+      console.log(profile);
       Model.User.findOrCreate({name: profile.displayName , email: userId}, {access_token: accessToken, refresh_token: refreshToken},
       (err, user, created) => {
         if (err) {
