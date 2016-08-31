@@ -28,7 +28,7 @@ app.use( session({
   resave: false,
   saveUninitialized: false,
   store:  new RedisStore({
-    host: 'redis',
+    host: process.env.REDIS_HOST,
     port: 6379
   })
 }));
@@ -38,6 +38,7 @@ app.use( passport.session());
 
 
 var ensureAuthenticated = (req, res, next ) => {
+  console.log(`user is ${!req.isAuthenticated() ? 'not ' : ''}authenticated`);
   if (req.isAuthenticated()) {
    return next();
  }
@@ -65,9 +66,9 @@ app.get('/connect/google', passport.authenticate( 'google', { scope: [
 }))
 
 
-app.get('/api/v1/auth/callback/google', passport.authenticate('google', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/');
+app.get('/api/v1/auth/callback/google', passport.authenticate('google', { failureRedirect: process.env.PROXY_FAILURE_URL }),
+  function(req, res) { 
+    res.redirect(process.env.PROXY_SUCCESS_URL);
 });
 
 app.get('/logout', handler.logOut);
