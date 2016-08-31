@@ -4,5 +4,5 @@ WORKDIR /usr/src/auth
 COPY package.json /usr/src/auth
 RUN npm install
 COPY . /usr/src/auth
-EXPOSE 3000
+EXPOSE 6969
 CMD [ "npm", "start" ]
