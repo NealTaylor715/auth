@@ -6,6 +6,7 @@
   "main": "",
   "scripts": {
     "start": "node server.js",
+    "start": "node -r dotenv/config server.js",
     "test": "karma start",
     "test:watch": "karma start --autoWatch=true --singleRun=false"
   },
@@ -14,7 +15,6 @@
   "author": "Nam Dao",
   "devDependencies": {
     "chai": "^3.2.0",
-    "dotenv": "^2.0.0",
     "eslint": "^2.2.0",
     "eslint-loader": "^1.0.0",
     "eslint-plugin-react": "^5.0.0",
@@ -26,6 +26,7 @@
     "body-parser": "^1.15.1",
     "connect-redis": "^3.1.0",
     "cookie-parser": "^1.4.3",
+    "dotenv": "^2.0.0",
     "express": "^4.14.0",
     "express-session": "^1.13.0",
     "install": "^0.8.1",
