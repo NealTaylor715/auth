@@ -3,7 +3,6 @@ var express          = require( 'express' )
   , Model            = require( './db/config' )
   , server           = require( 'http' ).createServer( app )
   , passport         = require( 'passport' )
-  , morgan           = require( 'morgan' )
   , refresh          = require( 'passport-oauth2-refresh')
   , bodyParser       = require( 'body-parser' )
   , cookieParser     = require( 'cookie-parser' )
@@ -21,7 +20,10 @@ app.use( bodyParser.json());
 app.use( bodyParser.urlencoded({
   extended: true
 }));
-app.use( morgan('dev') );
+
+if (process.env.NODE_ENV === 'development') {
+  app.use( require('morgan')('dev') );
+}
 
 app.use( cookieParser('cookie_secret'));
 app.use( session({
