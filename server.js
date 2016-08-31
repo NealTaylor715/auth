@@ -25,6 +25,10 @@ if (process.env.NODE_ENV === 'development') {
   app.use( require('morgan')('dev') );
 }
 
+if (process.env.NODE_ENV !== 'development') {
+  var client = require('redis').createClient(process.env.REDIS_URL);
+}
+
 app.use( cookieParser('cookie_secret'));
 app.use( session({
   secret: 'cookie_secret',
@@ -32,8 +36,9 @@ app.use( session({
   resave: false,
   saveUninitialized: false,
   store:  new RedisStore({
-    host: process.env.REDIS_HOST,
-    port: 6379
+    client: client,
+    // host: process.env.REDIS_HOST,
+    // port: 6379
   })
 }));
 
