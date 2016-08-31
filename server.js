@@ -3,6 +3,7 @@ var express          = require( 'express' )
   , Model            = require( './db/config' )
   , server           = require( 'http' ).createServer( app )
   , passport         = require( 'passport' )
+  , morgan           = require( 'morgan' )
   , refresh          = require( 'passport-oauth2-refresh')
   , bodyParser       = require( 'body-parser' )
   , cookieParser     = require( 'cookie-parser' )
@@ -20,6 +21,7 @@ app.use( bodyParser.json());
 app.use( bodyParser.urlencoded({
   extended: true
 }));
+app.use( morgan('dev') );
 
 app.use( cookieParser('cookie_secret'));
 app.use( session({
@@ -37,7 +39,7 @@ app.use( passport.initialize());
 app.use( passport.session());
 
 
-var ensureAuthenticated = (req, res, next ) => {
+var ensureAuthenticated = function(req, res, next ) {
   if (req.isAuthenticated()) {
    return next();
  }
@@ -54,7 +56,11 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-app.get('/verify', ensureAuthenticated, (req, res) => {
+app.get('/', function(req, res) {
+  res.send('Hello Friend Whatever you just did worked.. I Think.');
+});
+
+app.get('/verify', ensureAuthenticated, function(req, res) {
   res.status(200).json({id: req.user._id, name: req.user.name});
 });
 
