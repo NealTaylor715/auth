@@ -13,14 +13,14 @@ module.exports = {
     },
     (request, accessToken, refreshToken, profile, done) => {
       var userId = profile.emails[0].value;
-      console.log(profile);
+      console.log('Google profile name', profile.displayName);
       Model.User.findOrCreate({name: profile.displayName , email: userId}, {access_token: accessToken, refresh_token: refreshToken},
       (err, user, created) => {
         if (err) {
           console.log('err is', err);
           done(err, null);
         } else {
-          console.log('user is from Mongo', user);
+          console.log('user is from Mongo. Email:', user.email);
           console.log('created from Mongo is', created);
           done(null,user,created);
         }
@@ -28,10 +28,3 @@ module.exports = {
     }
   )
 }  
-
-
-
-
-
-
-
