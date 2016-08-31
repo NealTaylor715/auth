@@ -46,6 +46,7 @@ app.use( passport.initialize());
 app.use( passport.session());
 
 
+
 var ensureAuthenticated = function(req, res, next ) {
   console.log(`user is ${!req.isAuthenticated() ? 'not ' : ''}authenticated`);
   if (req.isAuthenticated()) {
