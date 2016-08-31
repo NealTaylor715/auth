@@ -69,8 +69,7 @@ app.get('/connect/google', passport.authenticate( 'google', { scope: [
   'https://www.googleapis.com/auth/plus.profile.emails.read'],
    accessType: 'online',
    prompt: 'consent'
-}))
-
+}));
 
 app.get('/api/v1/auth/callback/google', passport.authenticate('google', { failureRedirect: process.env.PROXY_FAILURE_URL }),
   function(req, res) { 
