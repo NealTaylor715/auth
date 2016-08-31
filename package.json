@@ -6,7 +6,6 @@
   "main": "",
   "scripts": {
     "start": "node server.js",
-    "start": "node -r dotenv/config server.js",
     "test": "karma start",
     "test:watch": "karma start --autoWatch=true --singleRun=false"
   },
