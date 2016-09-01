@@ -7,7 +7,8 @@
   "scripts": {
     "start": "node server.js",
     "test": "karma start",
-    "test:watch": "karma start --autoWatch=true --singleRun=false"
+    "test:watch": "karma start --autoWatch=true --singleRun=false",
+    "dev": "node -r dotenv/config server.js"
   },
   "repository": "",
   "keywords": [],

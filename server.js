@@ -36,14 +36,14 @@ app.use( session({
   resave: false,
   saveUninitialized: false,
   store:  new RedisStore({
-    // client: client,
-    host: process.env.REDIS_HOST,
+    host: 'redis',
     port: 6379
   })
 }));
 
 app.use( passport.initialize());
 app.use( passport.session());
+
 
 
 var ensureAuthenticated = function(req, res, next ) {
@@ -64,6 +64,10 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
+app.get('/api/v1/success', function(req, res) {
+  res.redirect(process.env.PROXY_SUCCESS_URL);
+});
+
 app.get('/', function(req, res) {
   res.send('Hello Friend Whatever you just did worked.. I Think.');
 });
@@ -78,9 +82,9 @@ app.get('/connect/google', passport.authenticate( 'google', { scope: [
    prompt: 'consent'
 }));
 
-app.get('/api/v1/auth/callback/google', passport.authenticate('google', { failureRedirect: process.env.PROXY_FAILURE_URL }),
+app.get('/api/v1/auth/callback/google', passport.authenticate('google', { failureRedirect: process.env.AUTH_FAILURE_PATH }),
   function(req, res) { 
-    res.redirect(process.env.PROXY_SUCCESS_URL);
+    res.redirect(process.env.AUTH_SUCCESS_PATH);
 });
 
 app.get('/logout', handler.logOut);
