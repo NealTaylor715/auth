@@ -1,20 +1,20 @@
-var express          = require( 'express' )
-  , app              = express()
-  , Model            = require( './db/config' )
-  , server           = require( 'http' ).createServer( app )
-  , passport         = require( 'passport' )
-  , refresh          = require( 'passport-oauth2-refresh')
-  , bodyParser       = require( 'body-parser' )
-  , cookieParser     = require( 'cookie-parser' )
-  , session          = require( 'express-session' )
-  , RedisStore       = require( 'connect-redis' )( session )
-  , handler          = require( './handler')
-  , strategy         = require( './authStrategy');
+var express          = require( 'express' );
+var app              = express();
+var Model            = require( './db/config' );
+var passport         = require( 'passport' );
+var refresh          = require( 'passport-oauth2-refresh');
+var bodyParser       = require( 'body-parser' );
+var cookieParser     = require( 'cookie-parser' );
+var session          = require( 'express-session' );
+var RedisStore       = require( 'connect-redis' )( session );
+var handler          = require( './handler');
+var strategy         = require( './authStrategy');
 
 var strategy = strategy.google;
+var PORT = process.env.PORT || 3000;
+
 passport.use(strategy);
 refresh.use(strategy);
-var PORT = process.env.PORT || 3000;
 app.use( express.static(__dirname + '/public'));
 app.use( bodyParser.json());
 app.use( bodyParser.urlencoded({
@@ -44,13 +44,12 @@ app.use( session({
 app.use( passport.initialize());
 app.use( passport.session());
 
-
-
 var ensureAuthenticated = function(req, res, next ) {
-  console.log(`user is ${!req.isAuthenticated() ? 'not ' : ''}authenticated`);
   if (req.isAuthenticated()) {
+   console.log('User authenticated!');
    return next();
  }
+  console.log('User is not authenticated');
   res.status(401).json({message: '401'});
 };
 
@@ -69,7 +68,7 @@ app.get('/api/v1/success', function(req, res) {
 });
 
 app.get('/', function(req, res) {
-  res.send('Hello Friend Whatever you just did worked.. I Think.');
+  res.send('Hey, you made it.. Now what?');
 });
 
 app.get('/verify', ensureAuthenticated, function(req, res) {
@@ -92,5 +91,6 @@ app.get('/token/gmail/:userId', handler.refresh);
 app.get('/connected/gmail', handler.getUsers);
 app.get('/dropTable', handler.dropTable);
 
-server.listen( PORT );
-console.log('listening on PORT', PORT);
+app.listen(PORT, function() {
+  console.log('Listening on PORT:', PORT);
+});

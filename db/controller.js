@@ -1,6 +1,6 @@
 var Model = require('./config');
 
-var createUser = (req, res) => {
+var createUser = function(req, res) {
   var user = new Model.User( 
   {
     name: String,
@@ -9,7 +9,7 @@ var createUser = (req, res) => {
     refresh_token: String
   });
 
-  user.save((err, result) => {
+  user.save(function(err, result) {
     if (err) {
       console.log(err);
     } else {

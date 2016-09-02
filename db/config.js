@@ -7,7 +7,7 @@ var MONGODB_URI = process.env.MONGODB_URI;
 var db;
 
 mongoose.connect(MONGODB_URI, 
-  function (err, database) {
+  function(err, database) {
   if (err) {
     console.log(err);
     process.exit(1);
