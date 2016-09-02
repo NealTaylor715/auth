@@ -11,17 +11,17 @@ module.exports = {
     callbackURL:  process.env.WEBSERVER_URL + '/api/v1/auth/callback/google',
     passReqToCallback: true
     },
-    (request, accessToken, refreshToken, profile, done) => {
+    function(request, accessToken, refreshToken, profile, done) {
       var userId = profile.emails[0].value;
       console.log('Google profile name', profile.displayName);
       Model.User.findOrCreate({name: profile.displayName , email: userId}, {access_token: accessToken, refresh_token: refreshToken},
-      (err, user, created) => {
+      function(err, user, created) {
         if (err) {
-          console.log('err is', err);
+          console.log('Error is', err);
           done(err, null);
         } else {
-          console.log('user is from Mongo. Email:', user.email);
-          console.log('created from Mongo is', created);
+          console.log('User from Mongo. Email:', user.email);
+          console.log('Created from Mongo?', created);
           done(null,user,created);
         }
       });
