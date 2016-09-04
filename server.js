@@ -27,10 +27,6 @@ if (process.env.NODE_ENV === 'development') {
   app.use( require('morgan')('dev') );
 }
 
-if (process.env.NODE_ENV !== 'development') {
-  var client = require('redis').createClient(process.env.REDIS_URL);
-}
-
 app.use( cookieParser('cookie_secret'));
 app.use( session({
   secret: 'cookie_secret',
