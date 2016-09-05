@@ -12,6 +12,8 @@ var strategy         = require( './authStrategy');
 
 var strategy = strategy.google;
 var PORT = process.env.PORT || 3000;
+var rHost = process.env.REDIS_HOST;
+var rPort = process.env.REDIS_PORT;
 
 passport.use(strategy);
 refresh.use(strategy);
@@ -25,10 +27,6 @@ if (process.env.NODE_ENV === 'development') {
   app.use( require('morgan')('dev') );
 }
 
-if (process.env.NODE_ENV !== 'development') {
-  var client = require('redis').createClient(process.env.REDIS_URL);
-}
-
 app.use( cookieParser('cookie_secret'));
 app.use( session({
   secret: 'cookie_secret',
@@ -36,8 +34,8 @@ app.use( session({
   resave: false,
   saveUninitialized: false,
   store:  new RedisStore({
-    host: 'redis',
-    port: 6379
+    host: rHost,
+    port: rPort
   })
 }));
 
