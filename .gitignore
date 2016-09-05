@@ -35,4 +35,5 @@ db/mlabconfig.js
 
 .DS_Store
 .env
+.vscode
 dump.rdb
