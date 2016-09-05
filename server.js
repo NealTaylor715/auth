@@ -12,8 +12,7 @@ var strategy         = require( './authStrategy');
 
 var strategy = strategy.google;
 var PORT = process.env.PORT || 3000;
-var rHost = process.env.REDIS_HOST;
-var rPort = process.env.REDIS_PORT;
+var rURL = process.env.REDIS_URL;
 
 passport.use(strategy);
 refresh.use(strategy);
@@ -34,8 +33,7 @@ app.use( session({
   resave: false,
   saveUninitialized: false,
   store:  new RedisStore({
-    host: rHost,
-    port: rPort
+    url: rURL
   })
 }));
 
